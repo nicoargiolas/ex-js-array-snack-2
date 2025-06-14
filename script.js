@@ -64,8 +64,7 @@ longBooksTitles.forEach(b => console.log(b));
 const availableBooks = books.filter(b => b.available === true);
 const discountedBooks = availableBooks.map(b => {
     const numericPrice = parseFloat(b.price.replace('€', '').trim());
-    b.discountedPrice = `${((numericPrice * 0.8).toFixed(2)).toString()}€`;
-    return b;
+    return { ...b, discountedPrice: `${((numericPrice * 0.8).toFixed(2)).toString()}€` };
 })
 console.log(discountedBooks);
 
@@ -158,7 +157,7 @@ async function getBooks() {
 // Ordina l’array booksByPricein base alla disponibilità (prima quelli disponibili), senza creare un nuovo array.
 
 const areThereAvailableBooks = books.some(b => b.available === true);
-const booksByPrice = books.sort((a, b) => parseFloat(a.price.replace('€', '').trim()) - parseFloat(b.price.replace('€', '').trim()))
+const booksByPrice = [...books].sort((a, b) => parseFloat(a.price.replace('€', '').trim()) - parseFloat(b.price.replace('€', '').trim()))
 booksByPrice.sort((a, b) => b.available - a.available);
 console.log(booksByPrice);
 
