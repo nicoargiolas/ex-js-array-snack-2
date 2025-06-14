@@ -157,9 +157,24 @@ async function getBooks() {
 // Crea un array (booksByPrice) con gli elementi di books ordinati in base al prezzo (crescente).
 // Ordina l’array booksByPricein base alla disponibilità (prima quelli disponibili), senza creare un nuovo array.
 
-
-
+const areThereAvailableBooks = books.some(b => b.available === true);
+const booksByPrice = books.sort((a, b) => parseFloat(a.price.replace('€', '').trim()) - parseFloat(b.price.replace('€', '').trim()))
+booksByPrice.sort((a, b) => b.available - a.available);
+console.log(booksByPrice);
 
 
 // Snack 7 (Bonus) - Analizza i tag
 // Usa reduce per creare un oggetto (tagCounts) che conta quante volte ogni tag viene usato tra i libri.
+
+const tagCounts = books.reduce((acc, book) => {
+    book.tags.forEach(tag => {
+        if (acc[tag]) {
+            acc[tag] += 1
+        } else {
+            acc[tag] = 1
+        }
+    })
+    return acc
+}, {})
+
+console.log(tagCounts);
